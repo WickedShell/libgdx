@@ -54,6 +54,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.SharedLibraryLoader;
 
 public class Lwjgl3Application implements Application {
+  private final String threadName;
 	private final Lwjgl3ApplicationConfiguration config;
 	private final Array<Lwjgl3Window> windows = new Array<Lwjgl3Window>();
 	private volatile Lwjgl3Window currentWindow;
@@ -84,7 +85,12 @@ public class Lwjgl3Application implements Application {
 		}
 	}
 
+  public String getThreadName() {
+      return threadName;
+  }
+
 	public Lwjgl3Application(ApplicationListener listener, Lwjgl3ApplicationConfiguration config) {
+    threadName = Thread.currentThread().getName();
 		initializeGlfw();
 		setApplicationLogger(new Lwjgl3ApplicationLogger());
 		this.config = Lwjgl3ApplicationConfiguration.copy(config);

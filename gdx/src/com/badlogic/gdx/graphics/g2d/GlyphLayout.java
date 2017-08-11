@@ -27,6 +27,9 @@ import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import com.badlogic.gdx.utils.Pools;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Application;
+
 /** Stores {@link GlyphRun runs} of glyphs for a piece of text. The text may contain newlines and color markup tags.
  * @author Nathan Sweet
  * @author davebaol
@@ -79,6 +82,13 @@ public class GlyphLayout implements Poolable {
 	 *           Truncate should not be used with text that contains multiple lines. Wrap is ignored if truncate is not null. */
 	public void setText (BitmapFont font, CharSequence str, int start, int end, Color color, float targetWidth, int halign,
 		boolean wrap, String truncate) {
+    if (!Thread.currentThread().getName().equals(Gdx.app.getThreadName())) {
+        System.out.println("Bad thread access (" + Thread.currentThread().getName() + " != " + Gdx.app.getThreadName());
+        for (StackTraceElement e : Thread.currentThread().getStackTrace()) {
+            System.out.println(e);
+        }
+        System.out.println("\n\n");
+    }
 		if (truncate != null)
 			wrap = true; // Causes truncate code to run, doesn't actually cause wrapping.
 		else if (targetWidth <= font.data.spaceWidth) //

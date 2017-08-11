@@ -200,4 +200,6 @@ public interface Application {
 	/** Removes the {@link LifecycleListener}.
 	 * @param listener */
 	public void removeLifecycleListener (LifecycleListener listener);
+
+  public String getThreadName();
 }
